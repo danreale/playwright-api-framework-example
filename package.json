@@ -1,0 +1,26 @@
+{
+  "name": "playwright-api-framework-example",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/danreale/playwright-api-framework-example#readme",
+  "bugs": {
+    "url": "https://github.com/danreale/playwright-api-framework-example/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danreale/playwright-api-framework-example.git"
+  },
+  "license": "MIT",
+  "author": "Dan Reale",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {},
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.9",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}
