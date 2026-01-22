@@ -1,5 +1,5 @@
 // lib/api-manager.ts
-import test, { APIRequestContext, APIResponse, expect } from "@playwright/test";
+import test, { APIRequestContext, APIResponse } from "@playwright/test";
 import {
   assertResponseStatus,
   assertResponseJson,
@@ -13,7 +13,11 @@ export class ApiManager {
     this.request = request;
   }
 
-  async post(url: string, data?: any, headers?: { [key: string]: string }) {
+  async post(
+    url: string,
+    data?: any, //eslint-disable-line @typescript-eslint/no-explicit-any
+    headers?: { [key: string]: string },
+  ): Promise<APIResponse> {
     return await test.step(`POST ${url}`, async () => {
       const response = await this.request.post(url, {
         data,
@@ -27,7 +31,7 @@ export class ApiManager {
   async get(
     url: string,
     params?: { [key: string]: string | number | boolean },
-  ) {
+  ): Promise<APIResponse> {
     return await test.step(`GET ${url}`, async () => {
       const response = await this.request.get(url, { params });
       await this.logOnFailure(response, params); // Explicit call
@@ -35,7 +39,7 @@ export class ApiManager {
     });
   }
 
-  async delete(url: string) {
+  async delete(url: string): Promise<APIResponse> {
     return await test.step(`DELETE ${url}`, async () => {
       const response = await this.request.delete(url);
       await this.logOnFailure(response, null); // Explicit call
@@ -43,7 +47,11 @@ export class ApiManager {
     });
   }
 
-  async put(url: string, data?: any, headers?: { [key: string]: string }) {
+  async put(
+    url: string,
+    data?: any, //eslint-disable-line @typescript-eslint/no-explicit-any
+    headers?: { [key: string]: string },
+  ): Promise<APIResponse> {
     return await test.step(`PUT ${url}`, async () => {
       const response = await this.request.put(url, {
         data,
@@ -58,14 +66,14 @@ export class ApiManager {
   async assertResponseStatus(
     response: APIResponse,
     expectedStatus: number = 200,
-  ) {
+  ): Promise<void> {
     await assertResponseStatus(response, expectedStatus);
   }
 
   async assertResponseJson(
     response: APIResponse,
     expectedData: Record<string, unknown>,
-  ) {
+  ): Promise<void> {
     await assertResponseJson(response, expectedData);
   }
 
@@ -75,18 +83,21 @@ export class ApiManager {
    * @param schema The JSON Schema object
    */
 
-  async assertSchema(response: APIResponse, schema: object) {
+  async assertSchema(response: APIResponse, schema: object): Promise<void> {
     await assertSchema(response, schema);
   }
 
   // The helper method used by each standard method
-  private async logOnFailure(response: APIResponse, sentData: any) {
+  private async logOnFailure(
+    response: APIResponse,
+    sentData: any, //eslint-disable-line @typescript-eslint/no-explicit-any
+  ): Promise<void> {
     if (!response.ok()) {
       const reportEntity = {
         url: response.url(),
         status: response.status(),
         statusText: response.statusText(),
-        requestData: sentData || "No data sent",
+        requestData: sentData ?? "No data sent",
         responseBody: await response
           .json()
           .catch(() => "Response was not JSON"),

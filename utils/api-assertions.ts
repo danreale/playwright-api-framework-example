@@ -9,6 +9,7 @@ export async function assertResponseStatus(
   response: APIResponse,
   expectedStatus: number = 200,
 ): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/require-await
   await test.step(`Assert response status is ${expectedStatus}`, async () => {
     const status = response.status();
     expect(status, `Expected ${expectedStatus} but got ${status}`).toBe(

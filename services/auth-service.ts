@@ -13,7 +13,7 @@ export class AuthService extends ApiManager {
 
   constructor(
     public request: APIRequestContext,
-    private playwright: any,
+    private playwright: any, //eslint-disable-line @typescript-eslint/no-explicit-any
   ) {
     super(request);
   }
@@ -39,7 +39,7 @@ export class AuthService extends ApiManager {
     role: UserRole,
     instances: ApiManager[],
   ): Promise<void> {
-    return await test.step(`Authorize instances as ${role}`, async () => {
+    await test.step(`Authorize instances as ${role}`, async () => {
       const token = await this.getToken(role);
       const authorizedRequest = await this.playwright.request.newContext({
         extraHTTPHeaders: { Authorization: `Bearer ${token}` },
